@@ -35,7 +35,7 @@ Let's say you want to change a something nested in this object:
  
  With `Object.byString` you can generate paths to object values and either set or get those values.
  
- ##Usage
+ ## Usage
  
  Using the example above:
  ### Setting Values
