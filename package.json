@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/TomSaporito/object-bystring/issues"
   },
-  "homepage": "https://github.com/TomSaporito/object-bystring#readme"
+  "homepage": "https://github.com/TomSaporito/object-bystring#readme",
+  "dependencies": {
+    "webpack": "3.5.3"
+  }
 }
