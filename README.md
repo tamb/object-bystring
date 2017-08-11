@@ -56,4 +56,12 @@ Let's say you want to change a something nested in this object:
  #### `objectInstance.byString(key);`
  
  `objA.byString('dependents[1].age');`
+
+ ### Is it futureproof?
+
+ Yes.  We check `if(Object.prototype.byString)`.  We're polyfilled and safe.
+
+
+ ### See room for imporvement?
+ Make a pull request.  Let's get this thing glimmering, maybe it will be in the next ECMAScript?? haha.  But seriously.
  
