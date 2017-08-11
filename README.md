@@ -38,6 +38,12 @@ Let's say you want to change a something nested in this object:
  ## Demo
  View a demo [here](https://plnkr.co/edit/KVPZIiIRO5fPeIgCgJO9?p=preview)
  
+ ## installation
+ `npm install --save object-bystring`.
+ `require('object-bystring')`
+
+ Or just past this into a `<script></script>` or `.js` file
+
  ## Usage
  
  Using the example above:
