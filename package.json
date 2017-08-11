@@ -1,0 +1,23 @@
+{
+  "name": "object-bystring",
+  "version": "1.0.0",
+  "description": "Access and alter objects using string literals",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomSaporito/object-bystring.git"
+  },
+  "keywords": [
+    "['object'",
+    "'bystring']"
+  ],
+  "author": "Tom Saporito <t.saporito@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TomSaporito/object-bystring/issues"
+  },
+  "homepage": "https://github.com/TomSaporito/object-bystring#readme"
+}
