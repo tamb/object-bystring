@@ -3,10 +3,10 @@ Access and alter deeply nested object properties by string notation
 
 ##Purpose
 Let's say you want to change a something nested in this object:  
-`var obj = {
-  name: 'tamb',
-  address: {
-    street: '123 fake street',
+`var obj = {  
+  name: 'tamb',  
+  address: {  
+    street: '123 fake street',  
     town: 'fake town',
     zip: '00000',
     state: 'Fake State',
