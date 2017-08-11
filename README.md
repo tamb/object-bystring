@@ -17,14 +17,11 @@ Let's say you want to change a something nested in this object:
       name: 'John Doe',
       age: 11
     },
-    
     {
       name: 'Jane Doe',
       age: 13
     }
-  
   ]
-
-}`
+};`
 
  You coould easily write `obj.dependents[1].age = 14;`
