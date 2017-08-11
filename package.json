@@ -2,7 +2,7 @@
   "name": "object-bystring",
   "version": "1.0.0",
   "description": "Access and alter objects using string literals",
-  "main": "src/index.js",
+  "main": "dist/object-bystring.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
