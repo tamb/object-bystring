@@ -49,11 +49,8 @@ Let's say you want to change a something nested in this object:
  
  
  ### Getting Values
-  #### `Object.byString(key, newValue, object)`
  
- `Object.byString('dependents[1].age', 14, objA);`
+ #### `objectInstance.byString(key);`
  
- #### `objectInstance.byString(key, newValue);`
- 
- `objA.byString('dependents[1].age', 14);`
+ `objA.byString('dependents[1].age');`
  
