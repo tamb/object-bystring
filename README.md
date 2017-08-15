@@ -42,7 +42,7 @@ Let's say you want to change a something nested in this object:
  `npm install --save object-bystring`.
  `require('object-bystring')`
 
- Or just past this into a `<script></script>` or `.js` file
+ Or just paste this into a `<script></script>` or `.js` file
 
  ## Usage
  
@@ -68,6 +68,6 @@ Let's say you want to change a something nested in this object:
  Yes.  We check `if(Object.prototype.byString)`.  We're polyfilled and safe.
 
 
- ### See room for imporvement?
+ ### See room for improvement?
  Make a pull request.  Let's get this thing glimmering, maybe it will be in the next ECMAScript?? haha.  But seriously.
  
