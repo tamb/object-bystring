@@ -9,7 +9,7 @@ module.exports = {
     },
 
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, '/'),
         filename: 'object-bystring.min.js',
         library: 'object-bystring',
         libraryTarget: 'umd',

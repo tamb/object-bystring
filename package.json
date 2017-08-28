@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/TomSaporito/object-bystring#readme",
   "dependencies": {
+    "object-assign": "4.1.1",
     "webpack": "3.5.3"
   }
 }
