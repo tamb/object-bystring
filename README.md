@@ -10,28 +10,37 @@ Let's say you want to change a something nested in this object:
     town: 'fake town',
     zip: '00000',
     state: 'Fake State',
-    city: 'Fake City'
+    city: 'Fake City',
+    POBoxes: [1234,23213,2321]
   },
   dependents: [
     {
       name: 'John Doe',
-      age: 11
+      age: 55
     },
     {
       name: 'Jane Doe',
-      age: 13
+      age: 44
     }
   ]
 };`
 
- You coould easily write `objA.dependents[1].age = 14;`  
- Or even `var indx = 1;  objA.dependents[indx].age = 14;`  
+ You coould easily write `objA.dependents[1].age = 45;`  
+ Or even `var indx = 1;  objA.dependents[indx].age = 45;`  
  
  No issue here.  
  
  But let's say you are trying to pass along an object (`objB`) of commands.  Those commands should dictate what to change in `objA`.
  
  How do you easily do this?
+ 
+ `
+ {
+  'address.street': '345 Faker Way',
+  'dependents[1].age': 45,
+  'address.POBoxes[2]': 43278
+ }
+ `
  
  With `Object.byString` you can generate paths to object values and either set or get those values.
  
@@ -42,7 +51,7 @@ Let's say you want to change a something nested in this object:
  `npm install --save object-bystring`.
  `require('object-bystring')`
 
- Or just past this into a `<script></script>` or `.js` file
+ Or just paste this into a `<script></script>` or `.js` file
 
  ## Usage
  
@@ -68,6 +77,6 @@ Let's say you want to change a something nested in this object:
  Yes.  We check `if(Object.prototype.byString)`.  We're polyfilled and safe.
 
 
- ### See room for imporvement?
+ ### See room for improvement?
  Make a pull request.  Let's get this thing glimmering, maybe it will be in the next ECMAScript?? haha.  But seriously.
  
