@@ -1,6 +1,6 @@
 {
   "name": "object-bystring",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Access and alter objects using string literals",
   "main": "dist/object-bystring.min.js",
   "scripts": {
@@ -19,6 +19,11 @@
   "bugs": {
     "url": "https://github.com/TomSaporito/object-bystring/issues"
   },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js"
+  ],
   "homepage": "https://github.com/TomSaporito/object-bystring#readme",
   "dependencies": {
     "object-assign": "4.1.1",
