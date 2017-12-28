@@ -2,8 +2,8 @@
       //NEW byString which can update values
     Object.prototype.byString = function(s, v, o) {
       var _o = o || this;
-          s = s.replace(/\[(\w+)\]/g, '.$1'); // CONVERT INDEXES TO PROPERTIES
-          s = s.replace(/^\./, ''); // STRIP A LEADING DOT
+          s = s.toString().replace(/\[(\w+)\]/g, '.$1'); // CONVERT INDEXES TO PROPERTIES
+          s = s.toString().replace(/^\./, ''); // STRIP A LEADING DOT
           var a = s.split('.'); //ARRAY OF STRINGS SPLIT BY '.'
           for (var i = 0; i < a.length; ++i) {//LOOP OVER ARRAY OF STRINGS
               var k = a[i];
