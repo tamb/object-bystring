@@ -14,7 +14,6 @@
                         _o[k] = v;
                       }
                     }
-                    console.log('here ',k, v);
                     _o = _o[k];//NO NEW VALUE SO JUST RETURN THE CURRENT VALUE
                   }
               } else {          //
