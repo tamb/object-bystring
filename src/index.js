@@ -14,11 +14,12 @@
                         _o[k] = v;
                       }
                     }
+                    console.log('here ',k, v);
                     _o = _o[k];//NO NEW VALUE SO JUST RETURN THE CURRENT VALUE
                   }
-              } else {
-                  return;
-              }
+              } else {          //
+                  _o[k] = v;    //
+              }                 //Added 1.18.18 so that objects that have no keys will simply have this key added to it
           }
           return _o;
       };
