@@ -1,7 +1,7 @@
 # object-bystring
 Access and alter deeply nested object properties by string notation
 
-##Purpose
+## Purpose
 Let's say you want to change a something nested in this object:  
 ```js
 var objA = {  
