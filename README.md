@@ -50,12 +50,19 @@ var objA = {
  View a demo [here](https://plnkr.co/edit/KVPZIiIRO5fPeIgCgJO9?p=preview)
  
  ## installation
- `npm install --save object-bystring`.
- `require('object-bystring')`
+ `npm install --save object-bystring`
 
  Or just paste this into a `<script></script>` or `.js` file
 
  ## Usage
+ 
+ ```js
+require('object-bystring')
+```
+webpack
+```js
+import 'object-bystring';
+```
  
  Using the example above:
  ### Setting Values
