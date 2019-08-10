@@ -3,7 +3,8 @@ Access and alter deeply nested object properties by string notation
 
 ##Purpose
 Let's say you want to change a something nested in this object:  
-`var objA = {  
+```js
+var objA = {  
   name: 'tamb',  
   address: {  
     street: '123 fake street',  
@@ -23,7 +24,8 @@ Let's say you want to change a something nested in this object:
       age: 44
     }
   ]
-};`
+};
+```
 
  You coould easily write `objA.dependents[1].age = 45;`  
  Or even `var indx = 1;  objA.dependents[indx].age = 45;`  
@@ -34,13 +36,13 @@ Let's say you want to change a something nested in this object:
  
  How do you easily do this?
  
- `
+ ```js
  {
   'address.street': '345 Faker Way',
   'dependents[1].age': 45,
   'address.POBoxes[2]': 43278
  }
- `
+ ```
  
  With `Object.byString` you can generate paths to object values and either set or get those values.
  
@@ -57,20 +59,26 @@ Let's say you want to change a something nested in this object:
  
  Using the example above:
  ### Setting Values
- #### `Object.byString(key, newValue, object)`
+ ### `Object.byString(key, newValue, object)`
  
- `Object.byString('dependents[1].age', 14, objA);`
+ ```js
+ Object.byString('dependents[1].age', 14, objA);
+ ```
  
- #### `objectInstance.byString(key, newValue);`
+ `objectInstance.byString(key, newValue);`
  
- `objA.byString('dependents[1].age', 14);`
+ ```js
+ objA.byString('dependents[1].age', 14);
+ ```
  
  
  ### Getting Values
  
  #### `objectInstance.byString(key);`
  
- `objA.byString('dependents[1].age');`
+ ```js
+ objA.byString('dependents[1].age');
+ ```
 
  ### Is it futureproof?
 
