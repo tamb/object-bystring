@@ -1,8 +1,8 @@
 {
   "name": "object-bystring",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "Access and alter objects using string literals",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "build": "jest --passWithNoTests && rollup -c rollup.config.js"
