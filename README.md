@@ -59,13 +59,13 @@ var objA = {
  
  Using the example above:
  ### Setting Values
- ### `Object.byString(key, newValue, object)`
+ #### `Object.byString(key, newValue, object)`
  
  ```js
  Object.byString('dependents[1].age', 14, objA);
  ```
  
- `objectInstance.byString(key, newValue);`
+ #### `objectInstance.byString(key, newValue);`
  
  ```js
  objA.byString('dependents[1].age', 14);
