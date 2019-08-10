@@ -9,27 +9,35 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TomSaporito/object-bystring.git"
+    "url": "git+https://github.com/tamb/object-bystring.git"
   },
   "keywords": [
     "['object'",
     "'bystring']"
   ],
-  "author": "Tom Saporito <t.saporito@gmail.com>",
+  "author": "tamb <tsaporito@fastmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TomSaporito/object-bystring/issues"
+    "url": "https://github.com/tamb/object-bystring/issues"
   },
   "files": [
     "LICENSE",
     "README.md",
     "dist"
   ],
-  "homepage": "https://github.com/TomSaporito/object-bystring#readme",
+  "homepage": "https://github.com/tamb/object-bystring#readme",
   "devDependencies": {
+    "husky": "^3.0.3",
     "jest": "^24.8.0",
+    "prettier": "1.18.2",
+    "pretty-quick": "^1.11.1",
     "rollup": "^1.19.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^5.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
