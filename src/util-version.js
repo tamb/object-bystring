@@ -6,6 +6,7 @@ export function byString(s, v, o) {
   for (var i = 0; i < a.length; ++i) {
     //LOOP OVER ARRAY OF STRINGS
     var k = a[i];
+
     if (k in _o) {
       //LOOP THROUGH OBJECT KEYS
       if (_o.hasOwnProperty(k)) {
