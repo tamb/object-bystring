@@ -5,7 +5,7 @@ export default [{
     input: 'src/index.js',
     output: {
       file: 'dist/index.js',
-      format: 'es'
+      format: 'umd'
     },
     plugins: [
       terser({
@@ -20,7 +20,7 @@ export default [{
     input: 'src/util-version.js',
     output: {
       file: 'dist/util.js',
-      format: 'iife',
+      format: 'umd',
       name: 'Domponent'
     },
     plugins: [
