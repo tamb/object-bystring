@@ -46,6 +46,7 @@ var objA = {
  
  With `Object.byString` you can generate paths to object values and either set or get those values.
  
+ 
  ## Demo
  View a demo [here](https://plnkr.co/edit/KVPZIiIRO5fPeIgCgJO9?p=preview)
  
@@ -84,7 +85,9 @@ import 'object-bystring';
  #### `objectInstance.byString(key);`
  
  ```js
- objA.byString('dependents[1].age');
+const value = objA.byString('dependents[1].age');
+ 
+const value2 =  objA.byString(`dependents.${variable}.somthing.${variable}`);
  ```
 
  ### Is it futureproof?
