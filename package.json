@@ -23,7 +23,7 @@
   "files": [
     "LICENSE",
     "README.md",
-    "index.js"
+    "dist"
   ],
   "homepage": "https://github.com/TomSaporito/object-bystring#readme",
   "devDependencies": {
