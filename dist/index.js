@@ -1,0 +1,1 @@
+Object.prototype.byString||Object.defineProperty(Object.prototype,"byString",{enumerable:!1,configurable:!1,writable:!1,value:function(e,t,r){for(var n=r||this,i=(e=(e=e.toString().replace(/\[(\w+)\]/g,".$1")).toString().replace(/^\./,"")).split("."),o=0;o<i.length;++o){var a=i[o];a in n?n.hasOwnProperty(a)&&(void 0!==t&&o===i.length-1&&(n[a]=t),n=n[a]):n[a]=t}return n}});

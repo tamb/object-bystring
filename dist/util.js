@@ -1,0 +1,1 @@
+var Domponent=function(n){"use strict";return n.byString=function(n,t,r){for(var e=r||this,i=(n=(n=n.toString().replace(/\[(\w+)\]/g,".$1")).toString().replace(/^\./,"")).split("."),o=0;o<i.length;++o){var a=i[o];a in e?e.hasOwnProperty(a)&&(t!==undefined&&o===i.length-1&&(e[a]=t),e=e[a]):e[a]=t}return e},n}({});

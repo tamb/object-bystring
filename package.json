@@ -4,7 +4,8 @@
   "description": "Access and alter objects using string literals",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "build": "jest --passWithNoTests && rollup -c rollup.config.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,9 @@
   ],
   "homepage": "https://github.com/TomSaporito/object-bystring#readme",
   "devDependencies": {
-    "webpack": "3.5.5"
+    "jest": "^24.8.0",
+    "rollup": "^1.19.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-terser": "^5.1.1"
   }
 }
