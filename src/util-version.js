@@ -1,4 +1,4 @@
-export function byString(s, v, o) {
+function byString(s, v, o) {
   var _o = o || this;
   s = s.toString().replace(/\[(\w+)\]/g, ".$1"); // CONVERT INDEXES TO PROPERTIES
   s = s.toString().replace(/^\./, ""); // STRIP A LEADING DOT
@@ -26,3 +26,5 @@ export function byString(s, v, o) {
   }
   return _o;
 }
+
+module.exports = { byString };

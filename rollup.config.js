@@ -1,35 +1,37 @@
-import { terser } from 'rollup-plugin-terser';
-import babel from 'rollup-plugin-babel';
+import { terser } from "rollup-plugin-terser";
+import babel from "rollup-plugin-babel";
 
-export default [{
-    input: 'src/index.js',
+export default [
+  {
+    input: "src/index.js",
     output: {
-      file: 'dist/index.js',
-      format: 'umd'
+      file: "dist/index.js",
+      format: "umd"
     },
     plugins: [
       terser({
         compress: true,
         ecma: 8,
         mangle: {
-          keep_classnames: true,
+          keep_classnames: true
         }
-    })]
+      })
+    ]
   },
-   {
-    input: 'src/util-version.js',
+  {
+    input: "src/util-version.js",
     output: {
-      file: 'dist/util.js',
-      format: 'umd',
-      name: 'Domponent'
+      file: "dist/util.js",
+      format: "umd"
     },
     plugins: [
       terser({
         compress: true,
-        ie8: true,
+        ie8: true
       }),
       babel({
-        exclude: 'node_modules/**'
+        exclude: "node_modules/**"
       })
     ]
-  }];
+  }
+];
