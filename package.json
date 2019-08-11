@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "jest --passWithNoTests && rollup -c rollup.config.js",
-    "example": "node clean.js && npm run build && npm pack && cd examples && npm install && node example.js"
+    "build-all": "node clean.js && npm run build && npm pack && cd examples && npm install --no-package-lock && node example.js"
   },
   "repository": {
     "type": "git",

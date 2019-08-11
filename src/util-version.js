@@ -27,4 +27,4 @@ function byString(o, s, v) {
   return _o;
 }
 
-module.exports = { byString };
+module.exports = byString;

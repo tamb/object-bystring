@@ -1,4 +1,4 @@
-const byString = require("./util-version.js").byString;
+const byString = require("./util-version.js");
 const mockObject = require("./mocks").mockObject;
 
 test("Object prototype remains unchanged", () => {
