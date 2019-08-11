@@ -1,5 +1,5 @@
-function byString(s, v, o) {
-  var _o = o || this;
+function byString(o, s, v) {
+  var _o = o;
   s = s.toString().replace(/\[(\w+)\]/g, ".$1"); // CONVERT INDEXES TO PROPERTIES
   s = s.toString().replace(/^\./, ""); // STRIP A LEADING DOT
   var a = s.split("."); //ARRAY OF STRINGS SPLIT BY '.'
