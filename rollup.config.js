@@ -3,6 +3,18 @@ import babel from "rollup-plugin-babel";
 
 export default [
   {
+    input: "src/polyfill.js",
+    output: {
+      file: "dist/polyfill.js",
+      format: "umd"
+    },
+    plugins: [
+      terser({
+        compress: true
+      })
+    ]
+  },
+  {
     input: "src/index.js",
     output: {
       file: "dist/index.js",
@@ -10,24 +22,7 @@ export default [
     },
     plugins: [
       terser({
-        compress: true,
-        ecma: 8,
-        mangle: {
-          keep_classnames: true
-        }
-      })
-    ]
-  },
-  {
-    input: "src/util-version.js",
-    output: {
-      file: "dist/util.js",
-      format: "umd"
-    },
-    plugins: [
-      terser({
-        compress: true,
-        ie8: true
+        compress: true
       }),
       babel({
         exclude: "node_modules/**"
