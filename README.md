@@ -120,11 +120,3 @@ const value = objA.byString("dependents[1].age");
 
 const value2 = objA.byString(`dependents.${variable}.somthing.${variable}`);
 ```
-
-### Is it futureproof?
-
-Yes. We check `if(Object.prototype.byString)`. We're polyfilled and safe.
-
-### See room for improvement?
-
-Make a pull request. Let's get this thing glimmering, maybe it will be in the next ECMAScript?? haha. But seriously.
