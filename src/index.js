@@ -1,3 +1,13 @@
+/**
+ *
+ * Thank you, Ray for the original Stackoverflow answer, which is the majority of the source code.
+ * https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
+ * Check out his github and so profile below:
+ * https://github.com/raybellis
+ * https://stackoverflow.com/users/6782/alnitak
+ *
+ */
+
 function byString(object, string, value) {
   var _object = object;
   string = string.toString().replace(/\[(\w+)\]/g, ".$1"); // CONVERT INDEXES TO PROPERTIES
