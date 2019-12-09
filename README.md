@@ -120,3 +120,13 @@ const value = objA.byString("dependents[1].age");
 
 const value2 = objA.byString(`dependents.${variable}.somthing.${variable}`);
 ```
+
+### Attribution
+Thank you, Ray for the original Stackoverflow answer, which is the majority of the source code.
+https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
+
+Check out his github and so profile below:
+
+https://github.com/raybellis
+
+https://stackoverflow.com/users/6782/alnitak
