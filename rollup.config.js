@@ -1,6 +1,5 @@
 import { terser } from "rollup-plugin-terser";
 import babel from "@rollup/plugin-babel";
-import typescript from "@rollup/plugin-typescript";
 
 export default [
   {
@@ -13,22 +12,24 @@ export default [
       terser({
         compress: true,
       }),
-    ],
-  },
-  {
-    input: "src/index.ts",
-    output: {
-      file: "dist/index.js",
-      format: "umd",
-    },
-    plugins: [
-      terser({
-        compress: true,
-      }),
-      typescript(),
       babel({
         exclude: "node_modules/**",
       }),
     ],
   },
+  // {
+  //   input: "src/index.ts",
+  //   output: {
+  //     file: "dist/index.js",
+  //     format: "umd",
+  //   },
+  //   plugins: [
+  //     terser({
+  //       compress: true,
+  //     }),
+  //     babel({
+  //       exclude: "node_modules/**",
+  //     }),
+  //   ],
+  // },
 ];

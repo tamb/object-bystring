@@ -9,13 +9,13 @@
  */
 
 function byString(object: Object, string: string, value: any) {
-  var _object = object;
+  var _object: any = object;
   string = string.toString().replace(/\[(\w+)\]/g, ".$1"); // CONVERT INDEXES TO PROPERTIES
   string = string.toString().replace(/^\./, ""); // STRIP A LEADING DOT
   var arrayOfStrings = string.split("."); //ARRAY OF STRINGS SPLIT BY '.'
   for (var i = 0; i < arrayOfStrings.length; ++i) {
     //LOOP OVER ARRAY OF STRINGS
-    var key = arrayOfStrings[i];
+    var key: any = arrayOfStrings[i];
     if (key in _object) {
       //LOOP THROUGH OBJECT KEYS
       if (_object.hasOwnProperty(key)) {
