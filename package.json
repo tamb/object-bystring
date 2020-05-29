@@ -29,6 +29,7 @@
     "README.md",
     "dist"
   ],
+  "types": "dist/index.d.ts",
   "homepage": "https://github.com/tamb/object-bystring#readme",
   "devDependencies": {
     "@rollup/plugin-babel": "^5.0.2",
