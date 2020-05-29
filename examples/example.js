@@ -1,5 +1,5 @@
-require("object-bystring");
-const byString = require("object-bystring/dist/util").byString;
+require("./../dist/polyfill");
+const byString = require("./../dist");
 
 console.log(byString);
 
@@ -7,8 +7,8 @@ const obj = {
   name: {
     first: "John",
     last: "Doe",
-    nickNames: ["JD", "John-Boy"]
-  }
+    nickNames: ["JD", "John-Boy"],
+  },
 };
 
 console.log("GET -> First Name: ", obj.byString("name.first"));

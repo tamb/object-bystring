@@ -1,4 +1,4 @@
-const byString = require("./index.js");
+const byString = require("./../dist/index.js");
 const mockObject = require("./mocks").mockObject;
 
 test("Object prototype remains unchanged", () => {
