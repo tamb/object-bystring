@@ -14,7 +14,7 @@ if (!Object.prototype.byString) {
     enumerable: false,
     configurable: false,
     writable: false,
-    value: function(string, value, object) {
+    value: function (string, value, object) {
       var _object = object || this;
       string = string.toString().replace(/\[(\w+)\]/g, ".$1"); // CONVERT INDEXES TO PROPERTIES
       string = string.toString().replace(/^\./, ""); // STRIP A LEADING DOT
@@ -41,6 +41,6 @@ if (!Object.prototype.byString) {
         } //Added 1.18.18 so that objects that have no keys will simply have this key added to it
       }
       return _object;
-    }
+    },
   });
 }
