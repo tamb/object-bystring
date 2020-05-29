@@ -4,7 +4,7 @@ import typescript from "@rollup/plugin-typescript";
 
 export default [
   {
-    input: "src/polyfill.ts",
+    input: "src/polyfill.js",
     output: {
       file: "dist/polyfill.js",
       format: "umd",
@@ -13,7 +13,6 @@ export default [
       terser({
         compress: true,
       }),
-      typescript(),
     ],
   },
   {
