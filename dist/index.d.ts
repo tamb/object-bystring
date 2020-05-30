@@ -7,5 +7,5 @@
  * https://stackoverflow.com/users/6782/alnitak
  *
  */
-export default function byString(object: object, string: string, value: any): any;
+export default function byString(object: object, string: string, value?: any): any;
 //# sourceMappingURL=index.d.ts.map
