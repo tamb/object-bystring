@@ -7,4 +7,4 @@
  * https://stackoverflow.com/users/6782/alnitak
  *
  */
-declare function byString(object: Object, string: string, value: any): any;
+declare function byString(object: object, string: string, value: any): any;

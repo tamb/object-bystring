@@ -8,7 +8,7 @@
  *
  */
 
-function byString(object: Object, string: string, value: any) {
+function byString(object: object, string: string, value: any) {
   var _object: any = object;
   string = string.toString().replace(/\[(\w+)\]/g, ".$1"); // CONVERT INDEXES TO PROPERTIES
   string = string.toString().replace(/^\./, ""); // STRIP A LEADING DOT
