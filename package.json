@@ -1,12 +1,11 @@
 {
   "name": "object-bystring",
-  "version": "4.0.1",
+  "version": "4.1.1",
   "description": "Access and alter objects using string literals",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npx rollup -c rollup.config.js && tsc && jest && node examples/example.js",
+    "test": "npx rollup -c rollup.config.js && jest && node examples/example.js && node addExports.js",
     "build": "npm run test",
-    "build-all": "node clean.js && npm run build && npm pack && cd examples && npm install --no-package-lock && node example.js",
     "safe-publish": "npm test && npm publish"
   },
   "repository": {
@@ -34,15 +33,14 @@
   "homepage": "https://github.com/tamb/object-bystring#readme",
   "devDependencies": {
     "@rollup/plugin-babel": "^5.0.2",
-    "@rollup/plugin-typescript": "^4.1.2",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.11.2",
-    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^6.1.0",
+    "rollup-plugin-typescript2": "^0.27.1",
     "typescript": "^3.9.3"
   },
   "husky": {
@@ -50,5 +48,7 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "@rollup/plugin-commonjs": "^12.0.0"
+  }
 }
