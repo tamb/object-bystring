@@ -1,10 +1,10 @@
 {
   "name": "object-bystring",
-  "version": "4.0.1",
+  "version": "4.1.0",
   "description": "Access and alter objects using string literals",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npx rollup -c rollup.config.js && tsc && jest && node examples/example.js",
+    "test": "npx rollup -c rollup.config.js && tsc --declaration && jest && node examples/example.js && node addExport.js",
     "build": "npm run test",
     "build-all": "node clean.js && npm run build && npm pack && cd examples && npm install --no-package-lock && node example.js",
     "safe-publish": "npm test && npm publish"
