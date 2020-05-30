@@ -4,7 +4,7 @@
   "description": "Access and alter objects using string literals",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npx rollup -c rollup.config.js && jest && node examples/example.js && node addExports.js",
+    "test": "node clean && npx rollup -c rollup.config.js && jest && node examples/example.js && node addExports.js",
     "build": "npm run test",
     "safe-publish": "npm test && npm publish"
   },
@@ -48,7 +48,5 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "dependencies": {
-    "@rollup/plugin-commonjs": "^12.0.0"
-  }
+  "dependencies": {}
 }
