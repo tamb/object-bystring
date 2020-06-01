@@ -15,18 +15,18 @@ var objA = {
     zip: "00000",
     state: "Fake State",
     city: "Fake City",
-    POBoxes: [1234, 23213, 2321]
+    POBoxes: [1234, 23213, 2321],
   },
   dependents: [
     {
       name: "John Doe",
-      age: 55
+      age: 55,
     },
     {
       name: "Jane Doe",
-      age: 44
-    }
-  ]
+      age: 44,
+    },
+  ],
 };
 ```
 
@@ -121,7 +121,10 @@ const value = objA.byString("dependents[1].age");
 const value2 = objA.byString(`dependents.${variable}.somthing.${variable}`);
 ```
 
+**stay up to date with the latest docs** : https://github.com/tamb/object-bystring
+
 ### Attribution
+
 Thank you, Ray for the original Stackoverflow answer, which is the majority of the source code.
 https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
 
