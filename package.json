@@ -1,6 +1,6 @@
 {
   "name": "object-bystring",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Access and alter objects using string literals",
   "main": "dist/index.js",
   "scripts": {
