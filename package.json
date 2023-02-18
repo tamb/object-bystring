@@ -4,7 +4,7 @@
   "description": "Access and alter objects using string literals",
   "main": "dist/index.js",
   "scripts": {
-    "test": "node clean && npx rollup -c rollup.config.js && jest && node examples/example.js && node addExports.js",
+    "test": "node clean && npx rollup -c rollup.config.js && jest && node examples/example.js",
     "build": "npm run test",
     "safe-publish": "npm test && npm publish"
   },
