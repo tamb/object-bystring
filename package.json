@@ -1,13 +1,13 @@
 {
   "name": "object-bystring",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Access and alter objects using string literals",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest src/",
     "build": "node clean && npx rollup -c rollup.config.js",
     "pack-test": "npm pack && cd examples && npm install && jest example.test.js",
-    "safe-publish": "npm test && npm build && npm pack-test && npm publish"
+    "safe-publish": "npm run test && npm run build && npm run pack-test && npm publish"
   },
   "repository": {
     "type": "git",
