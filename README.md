@@ -57,8 +57,6 @@ https://codesandbox.io/embed/object-bystring-demo-i3845d?fontsize=14&hidenavigat
 
 `npm install --save object-bystring`
 
-Or just paste this into a `<script></script>` or `.js` file
-
 ## Usage
 
 You can import either a utility method, or a polyfill to add this functionality to the `Object` prototype.
@@ -113,8 +111,6 @@ const value = objA.byString("dependents[1].age");
 
 const value2 = objA.byString(`dependents.${variable}.somthing.${variable}`);
 ```
-
-**stay up to date with the latest docs** : https://github.com/tamb/object-bystring
 
 ### Attribution
 
