@@ -48,10 +48,15 @@ How do you easily do this?
 ```
 
 With `Object.byString` you can generate paths to object values and either set or get those values.
-
+## Latest Docs:
+https://github.com/tamb/object-bystring
 ## Demo
-
-View a demo [here](https://plnkr.co/edit/KVPZIiIRO5fPeIgCgJO9?p=preview)
+<iframe src="https://codesandbox.io/embed/object-bystring-demo-i3845d?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="object-bystring-demo"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
 
 ## installation
 
@@ -66,20 +71,13 @@ You can import either a utility method, or a polyfill to add this functionality 
 ```js
 // util method
 const bystring = require("object-bystring");
-
-//polyfill
-require("object-bystring/polyfill");
-```
-
-webpack
-
-```js
-// util method
 import byString from "object-bystring";
 
 //polyfill
-import "object-bystring/polyfill";
+require("object-bystring/dist/polyfill");
+import "object-bystring/dist/polyfill";
 ```
+
 
 Using the example above:
 
