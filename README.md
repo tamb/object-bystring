@@ -47,10 +47,14 @@ How do you easily do this?
 }
 ```
 
-With `Object.byString` you can generate paths to object values and either set or get those values.
+With `byString` you can generate paths to object values and either set or get those values.
+
 ## Latest Docs:
+
 https://github.com/tamb/object-bystring
+
 ## Demo
+
 https://codesandbox.io/embed/object-bystring-demo-i3845d?fontsize=14&hidenavigation=1&theme=dark
 
 ## installation
@@ -65,12 +69,7 @@ You can import either a utility method, or a polyfill to add this functionality 
 // util method
 const bystring = require("object-bystring");
 import byString from "object-bystring";
-
-//polyfill
-require("object-bystring/dist/polyfill");
-import "object-bystring/dist/polyfill";
 ```
-
 
 Using the example above:
 
@@ -82,18 +81,6 @@ Using the example above:
 byString(objectA, "path.to.field", "new value");
 ```
 
-#### `Object.byString(key, newValue, object);`
-
-```js
-Object.byString("dependents[1].age", 14, objA);
-```
-
-#### `objectInstance.byString(key, newValue);`
-
-```js
-objA.byString("dependents[1].age", 14);
-```
-
 ### Getting Values
 
 #### `byString(object, key);`
@@ -102,14 +89,6 @@ objA.byString("dependents[1].age", 14);
 const finger = byString(person, "arm[0].hand.fingers[3]");
 
 const randomFinger = byString(person`arm[0].hand.fingers[${number}]`);
-```
-
-#### `objectInstance.byString(key);`
-
-```js
-const value = objA.byString("dependents[1].age");
-
-const value2 = objA.byString(`dependents.${variable}.somthing.${variable}`);
 ```
 
 ### Attribution
