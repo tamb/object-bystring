@@ -16,7 +16,7 @@ export default function byString(object: object, string: string, value?: any) {
   for (var i = 0; i < arrayOfStrings.length; ++i) {
     //LOOP OVER ARRAY OF STRINGS
     var key: any = arrayOfStrings[i];
-    if (key in _object) {
+    if (_object[key]) {
       //LOOP THROUGH OBJECT KEYS
       if (_object.hasOwnProperty(key)) {
         //USE ONLY KEYS WE CREATED
