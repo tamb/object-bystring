@@ -50,6 +50,12 @@ describe("byString", () => {
     expect(data.place.address.county).toMatch("Cook");
   });
 
+  test("Adds field to object", () => {
+    expect(data.foobar?.baz).toBeUndefined();
+    byString(data, "foobar.baz", "Buzz");
+    expect(byString(data, "foobar.baz")).toMatch("Buzz");
+  });
+
   test("Sets date to object", () => {
     byString(data, "place.address.date", new Date());
     expect(data.place.address.date).toBeInstanceOf(Date);
