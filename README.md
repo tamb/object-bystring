@@ -81,6 +81,11 @@ Using the example above:
 byString(objectA, "path.to.field", "new value");
 ```
 
+setting values for fields that don't exist will add them to the object.
+Setting values for array indexes that don't exist will add them to the array and other indexes will be undefined.
+
+````js
+
 ### Getting Values
 
 #### `byString(object, key);`
@@ -89,11 +94,13 @@ byString(objectA, "path.to.field", "new value");
 const finger = byString(person, "arm[0].hand.fingers[3]");
 
 const randomFinger = byString(person`arm[0].hand.fingers[${number}]`);
-```
+````
+
+Getting values for fields that don't exist will return `undefined`.
 
 ### Attribution
 
-Thank you, Ray for the original Stackoverflow answer, which is the majority of the source code.
+Thank you, Ray for the original Stackoverflow answer, which is the inspiration for the source code.
 https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
 
 Check out his github and so profile below:

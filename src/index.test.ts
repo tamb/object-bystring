@@ -124,6 +124,27 @@ describe("byString setters", () => {
     // @ts-ignore
     expect(data.people[2]).toBeUndefined();
   });
+
+  test("Setting array values does not affect other array values", () => {
+    byString(data, "people[0]", "Jill");
+    byString(data, "people[4]", "Jack");
+    // @ts-ignore
+    expect(data.people[0]).toMatch("Jill");
+    // @ts-ignore
+    expect(data.people).toHaveLength(5);
+    // @ts-ignore
+    expect(data.people[1]).toBeUndefined();
+  });
+
+  test("Setting array values for non-existent array works", () => {
+    byString(data, "losers[1]", "Jill");
+    // @ts-ignore
+    expect(data.losers[1]).toMatch("Jill");
+    // @ts-ignore
+    expect(data.losers).toHaveLength(2);
+    // @ts-ignore
+    expect(data.losers[0]).toBeUndefined();
+  });
 });
 
 describe("byString getters", () => {
