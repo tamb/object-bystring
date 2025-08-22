@@ -2,6 +2,17 @@
   "name": "object-bystring",
   "version": "6.1.0",
   "description": "Access and alter objects using string literals",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tamb/object-bystring.git"
+  },
+  "keywords": [
+    "object",
+    "bystring",
+    "string",
+    "utility",
+    "mutable"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.js",
   "files": [
@@ -41,17 +52,6 @@
       "<rootDir>/dist/"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tamb/object-bystring.git"
-  },
-  "keywords": [
-    "object",
-    "bystring",
-    "string",
-    "utility",
-    "mutable"
-  ],
   "author": "tamb <tamb@protonmail.com>",
   "license": "MIT",
   "bugs": {
