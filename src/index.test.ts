@@ -1,4 +1,5 @@
-import byString from "./index";
+import { describe, test, expect, beforeEach } from "vitest";
+import { byString } from "./index";
 
 // Import the helper functions for unit testing
 // We'll need to export them temporarily for testing

@@ -1,5 +1,5 @@
-const byStringOptimized = require("./dist/index.js");
-const byStringOriginal = require("./dist/original.js");
+import { byString as byStringOptimized } from "./dist/index.esm.js";
+import { byStringOriginal } from "./dist/original.esm.js";
 
 // Performance test to compare old vs new implementation
 function performanceTest() {

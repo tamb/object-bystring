@@ -1,4 +1,4 @@
-export default function byString(obj: any, key: string, value?: any): any {
+function byString(obj: any, key: string, value?: any): any {
   // Parse the key into path segments
   const segments = parseKey(key);
 
@@ -145,3 +145,5 @@ function getValue(obj: any, segments: PathSegment[]): any {
 
   return current;
 }
+
+export { byString };

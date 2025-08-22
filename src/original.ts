@@ -1,8 +1,4 @@
-export default function byStringOriginal(
-  obj: any,
-  key: string,
-  value?: any
-): any {
+function byStringOriginal(obj: any, key: string, value?: any): any {
   const keys = key.split(/\.|\[(\d+)\]/).filter(Boolean);
   let currentObj = obj;
 
@@ -36,3 +32,5 @@ export default function byStringOriginal(
     return result;
   }
 }
+
+export { byStringOriginal };
