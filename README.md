@@ -67,8 +67,8 @@ You can import either a utility method, or a polyfill to add this functionality 
 
 ```js
 // util method
-const bystring = require("object-bystring");
-import byString from "object-bystring";
+const { bystring } = require("object-bystring");
+import { byString } from "object-bystring";
 ```
 
 Using the example above:
@@ -121,7 +121,7 @@ All existing functionality is preserved with full backward compatibility.
 
 ### Attribution
 
-Thank you, Ray for the original Stackoverflow answer, which is the inspiration for the source code.
+Thank you, Ray for the original Stackoverflow answer, which is the inspiration for this project.
 https://stackoverflow.com/questions/6491463/accessing-nested-javascript-objects-with-string-key
 
 Check out his github and so profile below:
