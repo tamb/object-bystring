@@ -100,9 +100,9 @@ Getting values for fields that don't exist will return `undefined`.
 
 ### Performance
 
-**v6.1.0 Performance Improvements**
+**v7 Performance Improvements**
 
-The difference between v6.1.0 and v6.0.2 is a **21.12% performance improvement** for 1,000,000 iterations.
+v7 has a **21.12% performance improvement** for 1,000,000 iterations over v6.
 
 Performance test results:
 
