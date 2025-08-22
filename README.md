@@ -98,6 +98,27 @@ const randomFinger = byString(person`arm[0].hand.fingers[${number}]`);
 
 Getting values for fields that don't exist will return `undefined`.
 
+### Performance
+
+**v6.1.0 Performance Improvements**
+
+The difference between v6.1.0 and v6.0.2 is a **21.12% performance improvement** for 1,000,000 iterations.
+
+Performance test results:
+
+- **Setting values**: 15.78% faster
+- **Getting values**: 26.95% faster
+- **Overall**: 21.12% faster
+
+The optimization includes:
+
+- Improved parsing algorithm (replaced regex with character-by-character parser)
+- Modular architecture with separated concerns
+- Enhanced error handling and edge case coverage
+- Better TypeScript support and type safety
+
+All existing functionality is preserved with full backward compatibility.
+
 ### Attribution
 
 Thank you, Ray for the original Stackoverflow answer, which is the inspiration for the source code.

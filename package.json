@@ -1,11 +1,29 @@
 {
   "name": "object-bystring",
-  "version": "6.0.2",
+  "version": "6.1.0",
   "description": "Access and alter objects using string literals",
   "main": "dist/index.js",
+  "module": "dist/index.js",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist",
+    "dist/index.d.ts",
+    "dist/index.d.ts.map",
+    "dist/index.js"
+  ],
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "test": "jest src/",
     "test.watch": "jest --watch src/",
+    "test.performance": "node performance-test.js",
     "build": "node clean && npx rollup -c rollup.config.js",
     "safe-publish": "npm run test && npm run build && npm publish"
   },
@@ -39,15 +57,6 @@
   "bugs": {
     "url": "https://github.com/tamb/object-bystring/issues"
   },
-  "files": [
-    "LICENSE",
-    "README.md",
-    "dist",
-    "dist/index.d.ts",
-    "dist/index.d.ts.map",
-    "dist/index.js"
-  ],
-  "types": "dist/index.d.ts",
   "homepage": "https://github.com/tamb/object-bystring#readme",
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.4",

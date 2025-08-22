@@ -23,4 +23,24 @@ export default [
       typescript(),
     ],
   },
+  {
+    input: "src/original.ts",
+    output: {
+      file: "dist/original.js",
+      format: "umd",
+      name: "byStringOriginal",
+      globals: {
+        "object-bystring": "byStringOriginal",
+      },
+    },
+    plugins: [
+      terser({
+        compress: true,
+      }),
+      babel({
+        exclude: "node_modules/**",
+      }),
+      typescript(),
+    ],
+  },
 ];
