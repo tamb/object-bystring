@@ -70,4 +70,38 @@ export default [
       }),
     ],
   },
+  {
+    input: "src/v7.ts",
+    output: [
+      {
+        file: "dist/v7.js",
+        format: "umd",
+        name: "byStringV7",
+        globals: {
+          "object-bystring": "byStringV7",
+        },
+      },
+      {
+        file: "dist/v7.esm.js",
+        format: "es",
+      },
+      {
+        file: "dist/v7.esm.min.js",
+        format: "es",
+        plugins: [
+          terser({
+            compress: true,
+          }),
+        ],
+      },
+    ],
+    plugins: [
+      typescript({
+        declaration: true,
+        declarationMap: true,
+        outDir: "./dist",
+        exclude: ["**/*.test.ts", "**/vitest.config.ts"],
+      }),
+    ],
+  },
 ];

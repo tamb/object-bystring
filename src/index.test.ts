@@ -252,14 +252,16 @@ describe("Edge cases and error handling", () => {
     const obj: any = {};
     const result = byString(obj, "array[", "value");
     expect(result).toBe("value");
-    expect(obj.array).toBe("value");
+    expect(obj.array["["]).toBe("value");
+    expect(obj["array["]).toBeUndefined();
   });
 
   test("handles non-numeric array indices", () => {
     const obj: any = {};
     const result = byString(obj, "array[abc]", "value");
     expect(result).toBe("value");
-    expect(obj.array).toBe("value");
+    expect(obj.array["[abc]"]).toBe("value");
+    expect(obj["array[abc]"]).toBeUndefined();
   });
 
   test("handles very large array indices", () => {

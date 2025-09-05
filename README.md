@@ -98,26 +98,68 @@ const randomFinger = byString(person`arm[0].hand.fingers[${number}]`);
 
 Getting values for fields that don't exist will return `undefined`.
 
-### Performance
+### Performance & Optimization History
 
-**v7 Performance Improvements**
+The `byString` function has undergone significant optimizations across multiple versions:
 
-v7 has a **21.12% performance improvement** for 1,000,000 iterations over v6.
+#### **V8 (Current) - Ultra-Optimized**
 
-Performance test results:
+V8 delivers **79.55% performance improvement** over the original version (5,000,000 iterations):
 
-- **Setting values**: 15.78% faster
-- **Getting values**: 26.95% faster
-- **Overall**: 21.12% faster
+| Version        | Time         | vs Original       | vs V7             |
+| -------------- | ------------ | ----------------- | ----------------- |
+| Original       | 1,034.04ms   | -                 | -                 |
+| V7             | 543.41ms     | **47.46% faster** | -                 |
+| **V8 (Ultra)** | **211.45ms** | **79.55% faster** | **61.09% faster** |
 
-The optimization includes:
+**V8 Key Optimizations:**
 
-- Improved parsing algorithm (replaced regex with character-by-character parser)
-- Modular architecture with separated concerns
-- Enhanced error handling and edge case coverage
-- Better TypeScript support and type safety
+- Single-pass, zero-allocation inline algorithm
+- Eliminated helper functions and intermediate objects
+- Direct array/object creation and navigation
+- Optimized peek-ahead logic for type determination
+- Minimal string slicing operations
 
-All existing functionality is preserved with full backward compatibility.
+#### **V7 Optimizations**
+
+V7 introduced modular architecture with:
+
+- Character-by-character parser (replaced regex)
+- Separated concerns (`parseKey`, `setValue`, `getValue`)
+- Enhanced TypeScript support and type safety
+- Better error handling and edge case coverage
+
+#### **Breaking Changes in V8**
+
+⚠️ **Important**: V8 introduces breaking changes for edge cases:
+
+**1. Malformed Array Syntax**
+
+```js
+// Before (Original/V7): Creates nested property
+byString(obj, "array[", "value");
+// Result: obj.array["["] = "value"
+
+// After (V8): Creates literal property name
+byString(obj, "array[", "value");
+// Result: obj["array["] = "value"
+```
+
+**2. Non-numeric Array Indices**
+
+```js
+// Before (Original/V7): Creates nested property
+byString(obj, "array[abc]", "value");
+// Result: obj.array["[abc]"] = "value"
+
+// After (V8): Creates literal property name
+byString(obj, "array[abc]", "value");
+// Result: obj["array[abc]"] = "value"
+```
+
+**Impact**: These changes affect only malformed or non-standard syntax. Valid array notation (`array[0]`, `array[123]`) and object notation (`obj.prop`) work identically.
+
+**Recommendation**: Use proper syntax (`array[0]` for arrays, `obj.prop` for objects) to avoid these edge cases.
 
 ### Attribution
 

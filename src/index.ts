@@ -1,145 +1,168 @@
+// ULTRA-OPTIMIZED: Complete inline, zero-allocation approach
 function byString(obj: any, key: string, value?: any): any {
-  // Parse the key into path segments
-  const segments = parseKey(key);
+  const len = key.length;
 
-  // If setting a value
-  if (value !== undefined) {
-    return setValue(obj, segments, value);
-  }
-
-  // If getting a value
-  return getValue(obj, segments);
-}
-
-interface PathSegment {
-  type: "property" | "array";
-  value: string | number;
-}
-
-function parseKey(key: string): PathSegment[] {
-  const segments: PathSegment[] = [];
-  let current = "";
-  let i = 0;
-
-  while (i < key.length) {
-    const char = key[i];
-
-    if (char === ".") {
-      if (current) {
-        segments.push({ type: "property", value: current });
-        current = "";
-      }
-    } else if (char === "[") {
-      if (current) {
-        segments.push({ type: "property", value: current });
-        current = "";
-      }
-
-      // Parse array index
-      i++;
-      let indexStr = "";
-      while (i < key.length && key[i] !== "]") {
-        indexStr += key[i];
-        i++;
-      }
-
-      if (i < key.length && key[i] === "]") {
-        const index = parseInt(indexStr, 10);
-        if (!isNaN(index)) {
-          segments.push({ type: "array", value: index });
-        }
-      }
-    } else {
-      current += char;
+  // Handle empty key or dots-only key
+  if (len === 0) {
+    if (value !== undefined) {
+      obj[""] = value;
+      return value;
     }
-
-    i++;
-  }
-
-  if (current) {
-    segments.push({ type: "property", value: current });
-  }
-
-  return segments;
-}
-
-function setValue(obj: any, segments: PathSegment[], value: any): any {
-  // Handle empty segments case - set value directly on object
-  if (segments.length === 0) {
-    // For empty key, we need to set the value on the object itself
-    // This is a special case where we're setting a property with empty string key
-    Object.assign(obj, { "": value });
-    return value;
-  }
-
-  let current = obj;
-
-  // Navigate to the parent of the target
-  for (let i = 0; i < segments.length - 1; i++) {
-    const segment = segments[i];
-    const nextSegment = segments[i + 1];
-
-    if (segment.type === "property") {
-      if (!current[segment.value]) {
-        // Determine if next segment is an array to create the right type
-        current[segment.value] = nextSegment.type === "array" ? [] : {};
-      }
-      current = current[segment.value];
-    } else {
-      // Array segment
-      if (!Array.isArray(current)) {
-        current = [];
-      }
-      // Ensure array is large enough
-      while (current.length <= segment.value) {
-        current.push(undefined);
-      }
-      // If the current element is undefined, initialize it based on next segment
-      if (current[segment.value] === undefined) {
-        current[segment.value] = nextSegment.type === "array" ? [] : {};
-      }
-      current = current[segment.value];
-    }
-  }
-
-  // Set the final value
-  const lastSegment = segments[segments.length - 1];
-  if (lastSegment.type === "property") {
-    current[lastSegment.value] = value;
-  } else {
-    if (!Array.isArray(current)) {
-      current = [];
-    }
-    // Ensure array is large enough
-    while (current.length <= lastSegment.value) {
-      current.push(undefined);
-    }
-    current[lastSegment.value] = value;
-  }
-
-  return value;
-}
-
-function getValue(obj: any, segments: PathSegment[]): any {
-  // Handle empty segments case
-  if (segments.length === 0) {
     return obj;
   }
 
-  let current = obj;
-
-  for (const segment of segments) {
-    if (current == null || typeof current !== "object") {
-      return undefined;
+  // Check if key contains only dots - treat as empty key
+  let hasNonDot = false;
+  for (let j = 0; j < len; j++) {
+    if (key[j] !== ".") {
+      hasNonDot = true;
+      break;
     }
+  }
+  if (!hasNonDot) {
+    if (value !== undefined) {
+      obj[""] = value;
+      return value;
+    }
+    return obj[""];
+  }
 
-    if (segment.type === "property") {
-      current = current[segment.value];
-    } else {
-      if (!Array.isArray(current)) {
-        return undefined;
+  // Single-pass parsing with inline execution
+  let current = obj;
+  let start = 0;
+  const isSet = value !== undefined;
+
+  for (let i = 0; i <= len; i++) {
+    const char = i < len ? key[i] : null;
+    const isEnd = i === len;
+
+    if (char === "." || char === "[" || isEnd) {
+      // Extract property name
+      if (char !== "[" || start < i) {
+        const prop = key.slice(start, isEnd ? len : i);
+
+        if (char === "[") {
+          // Property followed by array access
+          if (isSet) {
+            if (current[prop] == null) {
+              // This property will have array access, so create an array
+              current[prop] = [];
+            }
+            current = current[prop];
+          } else {
+            if (typeof current !== "object" || current == null)
+              return undefined;
+            current = current[prop];
+            if (current == null) return undefined;
+          }
+        } else if (isEnd) {
+          // Final property
+          if (isSet) {
+            current[prop] = value;
+            return value;
+          }
+          return typeof current === "object" && current != null
+            ? current[prop]
+            : undefined;
+        } else {
+          // Property with more to come
+          if (isSet) {
+            if (current[prop] == null) {
+              // Peek ahead
+              const nextChar = i + 1 < len ? key[i + 1] : "";
+              current[prop] = nextChar === "[" ? [] : {};
+            }
+            current = current[prop];
+          } else {
+            if (typeof current !== "object" || current == null)
+              return undefined;
+            current = current[prop];
+            if (current == null) return undefined;
+          }
+        }
       }
-      current = current[segment.value as number];
+
+      // Handle array access
+      if (char === "[") {
+        i++; // Skip [
+        start = i;
+
+        // Find closing bracket
+        while (i < len && key[i] !== "]") i++;
+
+        if (i >= len) {
+          // Malformed - treat remaining as property
+          const malformed = key.slice(start - 1);
+          if (isSet) {
+            current[malformed] = value;
+            return value;
+          }
+          return undefined;
+        }
+
+        // Parse index
+        const indexStr = key.slice(start, i);
+        const index = parseInt(indexStr, 10);
+
+        if (isNaN(index) || indexStr !== index.toString()) {
+          // Non-numeric - treat as property
+          const propName = `[${indexStr}]`;
+          if (isSet) {
+            current[propName] = value;
+            return value;
+          }
+          return current && typeof current === "object"
+            ? current[propName]
+            : undefined;
+        }
+
+        i++; // Skip ]
+
+        // Check if final
+        if (i >= len) {
+          if (isSet) {
+            if (!Array.isArray(current)) current = [];
+            if (current.length <= index) current.length = index + 1;
+            current[index] = value;
+            return value;
+          }
+          return Array.isArray(current) ? current[index] : undefined;
+        }
+
+        // More segments
+        if (isSet) {
+          if (!Array.isArray(current)) current = [];
+          if (current.length <= index) current.length = index + 1;
+          if (current[index] == null) {
+            // Look ahead to see what's next
+            let nextIsArray = false;
+            if (i < len && key[i] === ".") {
+              nextIsArray = i + 1 < len && key[i + 1] === "[";
+            } else {
+              nextIsArray = i < len && key[i] === "[";
+            }
+            current[index] = nextIsArray ? [] : {};
+          }
+          current = current[index];
+        } else {
+          if (!Array.isArray(current)) return undefined;
+          current = current[index];
+          if (current == null) return undefined;
+        }
+
+        // Skip . if present
+        if (i < len && key[i] === ".") i++;
+        start = i;
+        continue;
+      }
+
+      // Update start position
+      if (char === ".") {
+        i++;
+        start = i;
+      } else if (!isEnd) {
+        start = i;
+      }
     }
   }
 
