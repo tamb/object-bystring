@@ -39,6 +39,7 @@
     "test:coverage": "vitest run --coverage",
     "test.performance": "node performance-test.mjs",
     "build": "node clean.mjs && npx rollup -c rollup.config.mjs",
+    "safe-publish:alpha": "npm run test && npm run build && npm publish --tag alpha",
     "safe-publish": "npm run test && npm run build && npm publish"
   },
   "author": "tamb <tamb@protonmail.com>",
