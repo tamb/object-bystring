@@ -102,19 +102,38 @@ Getting values for fields that don't exist will return `undefined`.
 
 The `byString` function has undergone significant optimizations across multiple versions:
 
-#### **V8 (Current) - Ultra-Optimized**
+#### **v8.0.1 (Current) - Compiled Accessors & Path Caching**
 
-V8 delivers **79.55% performance improvement** over the original version (5,000,000 iterations):
+v8.0.1 delivers an additional **~61% performance improvement** across the board over v8.0.0 and **~77% improvement** over the original version (5,000,000 iterations):
 
-| Version        | Time         | vs Original       | vs V7             |
-| -------------- | ------------ | ----------------- | ----------------- |
-| Original       | 1,034.04ms   | -                 | -                 |
-| V7             | 543.41ms     | **47.46% faster** | -                 |
-| **V8 (Ultra)** | **211.45ms** | **79.55% faster** | **61.09% faster** |
+| Version    | Set (ms)  | Get (ms)  | Total (ms)  | vs V8 (8.0.0)    | vs Original      |
+| ---------- | --------- | --------- | ----------- | ---------------- | ---------------- |
+| Original   | 2,846ms   | 2,979ms   | 5,825ms     | -                | -                |
+| V7         | 2,427ms   | 2,104ms   | 4,531ms     | -                | **22.2% faster** |
+| V8 (8.0.0) | 1,884ms   | 1,574ms   | 3,459ms     | -                | **40.6% faster** |
+| **v8.0.1** | **740ms** | **587ms** | **1,328ms** | **61.6% faster** | **77.2% faster** |
+
+**v8.0.1 Key Optimizations (Non-Breaking):**
+
+- Bounded compiled accessor path cache (`Map` with bounded capacity)
+- Specialized unrolled getter and setter accessors for common depths (1–4) and fast loop fallback
+- Zero-allocation integer index parsing from char codes
+- Complete separation of getter and setter paths eliminating runtime conditional checks
+- 100% backward-compatible with all existing tests and behavior
+
+#### **V8.0.0 - Inline Algorithm**
+
+V8 delivered initial inline zero-allocation improvements:
+
+| Version  | Time         | vs Original       | vs V7             |
+| -------- | ------------ | ----------------- | ----------------- |
+| Original | 1,034.04ms   | -                 | -                 |
+| V7       | 543.41ms     | **47.46% faster** | -                 |
+| **V8**   | **211.45ms** | **79.55% faster** | **61.09% faster** |
 
 **V8 Key Optimizations:**
 
-- Single-pass, zero-allocation inline algorithm
+- Single-pass inline algorithm
 - Eliminated helper functions and intermediate objects
 - Direct array/object creation and navigation
 - Optimized peek-ahead logic for type determination

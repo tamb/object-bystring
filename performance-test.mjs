@@ -1,6 +1,7 @@
 import { byString as byStringOptimized } from "./dist/index.esm.js";
 import { byStringOriginal } from "./dist/original.esm.js";
 import { byString as byStringV7 } from "./dist/v7.esm.js";
+import { byString as byStringV8 } from "./dist/v8.esm.js";
 
 // Performance test to compare implementations
 function performanceTest() {
@@ -29,6 +30,25 @@ function performanceTest() {
     set: setEnd1 - setStart1,
     get: getEnd1 - getStart1,
     total: getEnd1 - setStart1,
+  };
+
+  // Test v8 version
+  const testObj4 = {};
+  const setStart4 = performance.now();
+  for (let i = 0; i < iterations; i++) {
+    byStringV8(testObj4, `level1.level2.level3[${i % 10}]`, `value${i}`);
+  }
+  const setEnd4 = performance.now();
+  const getStart4 = performance.now();
+  for (let i = 0; i < iterations; i++) {
+    byStringV8(testObj4, `level1.level2.level3[${i % 10}]`);
+  }
+  const getEnd4 = performance.now();
+
+  results.v8 = {
+    set: setEnd4 - setStart4,
+    get: getEnd4 - getStart4,
+    total: getEnd4 - setStart4,
   };
 
   // Test original version
@@ -117,6 +137,13 @@ function performanceTest() {
   console.log("⚡ HEAD-TO-HEAD COMPARISON");
   console.log("═".repeat(50));
 
+  const optimizedVsV8Set =
+    ((results.v8.set - results.optimized.set) / results.v8.set) * 100;
+  const optimizedVsV8Get =
+    ((results.v8.get - results.optimized.get) / results.v8.get) * 100;
+  const optimizedVsV8Total =
+    ((results.v8.total - results.optimized.total) / results.v8.total) * 100;
+
   const optimizedVsV7Set =
     ((results.v7.set - results.optimized.set) / results.v7.set) * 100;
   const optimizedVsV7Get =
@@ -125,6 +152,16 @@ function performanceTest() {
     ((results.v7.total - results.optimized.total) / results.v7.total) * 100;
 
   const comparisonTable = {
+    "Optimized vs V8": {
+      Set:
+        (optimizedVsV8Set > 0 ? "+" : "") + optimizedVsV8Set.toFixed(1) + "%",
+      Get:
+        (optimizedVsV8Get > 0 ? "+" : "") + optimizedVsV8Get.toFixed(1) + "%",
+      Total:
+        (optimizedVsV8Total > 0 ? "+" : "") +
+        optimizedVsV8Total.toFixed(1) +
+        "%",
+    },
     "Optimized vs V7": {
       Set:
         (optimizedVsV7Set > 0 ? "+" : "") + optimizedVsV7Set.toFixed(1) + "%",
@@ -151,6 +188,12 @@ function performanceTest() {
     )}`
   );
   console.log(
+    `V8        - level1.level2.level3[0]: ${byStringV8(
+      testObj4,
+      "level1.level2.level3[0]"
+    )}`
+  );
+  console.log(
     `Original  - level1.level2.level3[0]: ${byStringOriginal(
       testObj2,
       "level1.level2.level3[0]"
@@ -165,6 +208,12 @@ function performanceTest() {
   console.log(
     `Optimized - level1.level2.level3[5]: ${byStringOptimized(
       testObj1,
+      "level1.level2.level3[5]"
+    )}`
+  );
+  console.log(
+    `V8        - level1.level2.level3[5]: ${byStringV8(
+      testObj4,
       "level1.level2.level3[5]"
     )}`
   );
