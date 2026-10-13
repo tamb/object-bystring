@@ -104,4 +104,38 @@ export default [
       }),
     ],
   },
+  {
+    input: "src/v8.ts",
+    output: [
+      {
+        file: "dist/v8.js",
+        format: "umd",
+        name: "byStringV8",
+        globals: {
+          "object-bystring": "byStringV8",
+        },
+      },
+      {
+        file: "dist/v8.esm.js",
+        format: "es",
+      },
+      {
+        file: "dist/v8.esm.min.js",
+        format: "es",
+        plugins: [
+          terser({
+            compress: true,
+          }),
+        ],
+      },
+    ],
+    plugins: [
+      typescript({
+        declaration: true,
+        declarationMap: true,
+        outDir: "./dist",
+        exclude: ["**/*.test.ts", "**/vitest.config.ts"],
+      }),
+    ],
+  },
 ];

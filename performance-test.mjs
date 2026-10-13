@@ -1,185 +1,177 @@
-import { byString as byStringOptimized } from "./dist/index.esm.js";
-import { byStringOriginal } from "./dist/original.esm.js";
-import { byString as byStringV7 } from "./dist/v7.esm.js";
+import { byString } from "./dist/index.esm.js";
+import { byStringV8 } from "./dist/v8.esm.js";
 
-// Performance test to compare implementations
-function performanceTest() {
-  const iterations = 5000000;
+const iterations = Number(process.env.BENCHMARK_ITERATIONS ?? 500_000);
+const rounds = Number(process.env.BENCHMARK_ROUNDS ?? 7);
+const warmupIterations = Math.min(20_000, iterations);
+let sink;
 
-  console.log(
-    `🚀 Running performance test with ${iterations.toLocaleString()} iterations\n`
-  );
-
-  const results = {};
-
-  // Test optimized version
-  const testObj1 = {};
-  const setStart1 = performance.now();
-  for (let i = 0; i < iterations; i++) {
-    byStringOptimized(testObj1, `level1.level2.level3[${i % 10}]`, `value${i}`);
-  }
-  const setEnd1 = performance.now();
-  const getStart1 = performance.now();
-  for (let i = 0; i < iterations; i++) {
-    byStringOptimized(testObj1, `level1.level2.level3[${i % 10}]`);
-  }
-  const getEnd1 = performance.now();
-
-  results.optimized = {
-    set: setEnd1 - setStart1,
-    get: getEnd1 - getStart1,
-    total: getEnd1 - setStart1,
-  };
-
-  // Test original version
-  const testObj2 = {};
-  const setStart2 = performance.now();
-  for (let i = 0; i < iterations; i++) {
-    byStringOriginal(testObj2, `level1.level2.level3[${i % 10}]`, `value${i}`);
-  }
-  const setEnd2 = performance.now();
-  const getStart2 = performance.now();
-  for (let i = 0; i < iterations; i++) {
-    byStringOriginal(testObj2, `level1.level2.level3[${i % 10}]`);
-  }
-  const getEnd2 = performance.now();
-
-  results.original = {
-    set: setEnd2 - setStart2,
-    get: getEnd2 - getStart2,
-    total: getEnd2 - setStart2,
-  };
-
-  // Test v7 version
-  const testObj3 = {};
-  const setStart3 = performance.now();
-  for (let i = 0; i < iterations; i++) {
-    byStringV7(testObj3, `level1.level2.level3[${i % 10}]`, `value${i}`);
-  }
-  const setEnd3 = performance.now();
-  const getStart3 = performance.now();
-  for (let i = 0; i < iterations; i++) {
-    byStringV7(testObj3, `level1.level2.level3[${i % 10}]`);
-  }
-  const getEnd3 = performance.now();
-
-  results.v7 = {
-    set: setEnd3 - setStart3,
-    get: getEnd3 - getStart3,
-    total: getEnd3 - setStart3,
-  };
-
-  // Display results table
-  console.log("📊 PERFORMANCE RESULTS");
-  console.log("═".repeat(72));
-
-  const performanceTable = {};
-  Object.entries(results).forEach(([version, times]) => {
-    const name = version.charAt(0).toUpperCase() + version.slice(1);
-    performanceTable[name] = {
-      "Set (ms)": times.set.toFixed(2),
-      "Get (ms)": times.get.toFixed(2),
-      "Total (ms)": times.total.toFixed(2),
-    };
-  });
-
-  console.table(performanceTable);
-  console.log();
-
-  // Performance improvements table
-  console.log("📈 PERFORMANCE IMPROVEMENTS (vs Original)");
-  console.log("═".repeat(58));
-
-  const improvementsTable = {};
-  Object.entries(results).forEach(([version, times]) => {
-    if (version === "original") return;
-
-    const setImprovement =
-      ((results.original.set - times.set) / results.original.set) * 100;
-    const getImprovement =
-      ((results.original.get - times.get) / results.original.get) * 100;
-    const totalImprovement =
-      ((results.original.total - times.total) / results.original.total) * 100;
-
-    const name = version.charAt(0).toUpperCase() + version.slice(1);
-    improvementsTable[name] = {
-      Set: (setImprovement > 0 ? "+" : "") + setImprovement.toFixed(1) + "%",
-      Get: (getImprovement > 0 ? "+" : "") + getImprovement.toFixed(1) + "%",
-      Total:
-        (totalImprovement > 0 ? "+" : "") + totalImprovement.toFixed(1) + "%",
-    };
-  });
-
-  console.table(improvementsTable);
-  console.log();
-
-  // Head-to-head comparison
-  console.log("⚡ HEAD-TO-HEAD COMPARISON");
-  console.log("═".repeat(50));
-
-  const optimizedVsV7Set =
-    ((results.v7.set - results.optimized.set) / results.v7.set) * 100;
-  const optimizedVsV7Get =
-    ((results.v7.get - results.optimized.get) / results.v7.get) * 100;
-  const optimizedVsV7Total =
-    ((results.v7.total - results.optimized.total) / results.v7.total) * 100;
-
-  const comparisonTable = {
-    "Optimized vs V7": {
-      Set:
-        (optimizedVsV7Set > 0 ? "+" : "") + optimizedVsV7Set.toFixed(1) + "%",
-      Get:
-        (optimizedVsV7Get > 0 ? "+" : "") + optimizedVsV7Get.toFixed(1) + "%",
-      Total:
-        (optimizedVsV7Total > 0 ? "+" : "") +
-        optimizedVsV7Total.toFixed(1) +
-        "%",
+const benchmarks = [
+  {
+    name: "simple property get",
+    create: (implementation) => {
+      const object = { value: 1 };
+      return () => implementation(object, "value");
     },
-  };
+  },
+  {
+    name: "simple property set",
+    create: (implementation) => {
+      const object = { value: 0 };
+      return (i) => implementation(object, "value", i);
+    },
+  },
+  {
+    name: "nested property get",
+    create: (implementation) => {
+      const object = { level1: { level2: { value: 1 } } };
+      return () => implementation(object, "level1.level2.value");
+    },
+  },
+  {
+    name: "nested property set",
+    create: (implementation) => {
+      const object = { level1: { level2: { value: 0 } } };
+      return (i) => implementation(object, "level1.level2.value", i);
+    },
+  },
+  {
+    name: "array index get",
+    create: (implementation) => {
+      const object = { values: [1] };
+      return () => implementation(object, "values[0]");
+    },
+  },
+  {
+    name: "array index set",
+    create: (implementation) => {
+      const object = { values: [0] };
+      return (i) => implementation(object, "values[0]", i);
+    },
+  },
+  {
+    name: "mixed path get",
+    create: (implementation) => {
+      const object = { level1: { values: [{ value: 1 }] } };
+      return () => implementation(object, "level1.values[0].value");
+    },
+  },
+  {
+    name: "mixed path set",
+    create: (implementation) => {
+      const object = { level1: { values: [{ value: 0 }] } };
+      return (i) => implementation(object, "level1.values[0].value", i);
+    },
+  },
+  {
+    name: "multiple array indices get",
+    create: (implementation) => {
+      const object = { matrix: [[[1]]] };
+      return () => implementation(object, "matrix[0][0][0]");
+    },
+  },
+  {
+    name: "missing path get",
+    create: (implementation) => {
+      const object = { level1: {} };
+      return () => implementation(object, "level1.missing.value");
+    },
+  },
+  {
+    name: "dynamic mixed path get",
+    create: (implementation) => {
+      const object = { level1: { level2: { values: Array(10).fill(1) } } };
+      const keys = Array.from(
+        { length: 10 },
+        (_, index) => `level1.level2.values[${index}]`
+      );
+      return (i) => implementation(object, keys[i % keys.length]);
+    },
+  },
+  {
+    name: "dynamic mixed path set",
+    create: (implementation) => {
+      const object = { level1: { level2: { values: Array(10).fill(0) } } };
+      const keys = Array.from(
+        { length: 10 },
+        (_, index) => `level1.level2.values[${index}]`
+      );
+      return (i) => implementation(object, keys[i % keys.length], i);
+    },
+  },
+];
 
-  console.table(comparisonTable);
-  console.log();
+function measure(implementation, createOperation) {
+  const operation = createOperation(implementation);
 
-  // Verify functionality
-  console.log("✅ FUNCTIONALITY VERIFICATION");
-  console.log("-".repeat(40));
+  for (let i = 0; i < warmupIterations; i++) sink = operation(i);
 
-  console.log(
-    `Optimized - level1.level2.level3[0]: ${byStringOptimized(
-      testObj1,
-      "level1.level2.level3[0]"
-    )}`
-  );
-  console.log(
-    `Original  - level1.level2.level3[0]: ${byStringOriginal(
-      testObj2,
-      "level1.level2.level3[0]"
-    )}`
-  );
-  console.log(
-    `V7        - level1.level2.level3[0]: ${byStringV7(
-      testObj3,
-      "level1.level2.level3[0]"
-    )}`
-  );
-  console.log(
-    `Optimized - level1.level2.level3[5]: ${byStringOptimized(
-      testObj1,
-      "level1.level2.level3[5]"
-    )}`
-  );
-  console.log(
-    `Original  - level1.level2.level3[5]: ${byStringOriginal(
-      testObj2,
-      "level1.level2.level3[5]"
-    )}`
-  );
-  console.log(
-    `V7        - level1.level2.level3[5]: ${byStringV7(
-      testObj3,
-      "level1.level2.level3[5]"
-    )}`
-  );
+  const start = performance.now();
+  for (let i = 0; i < iterations; i++) sink = operation(i);
+  return performance.now() - start;
 }
 
-performanceTest();
+function median(values) {
+  const sorted = values.toSorted((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)];
+}
+
+const results = [];
+
+for (const benchmark of benchmarks) {
+  const v8Times = [];
+  const currentTimes = [];
+
+  for (let round = 0; round < rounds; round++) {
+    const implementations =
+      round % 2 === 0
+        ? [
+            [byStringV8, v8Times],
+            [byString, currentTimes],
+          ]
+        : [
+            [byString, currentTimes],
+            [byStringV8, v8Times],
+          ];
+
+    for (const [implementation, times] of implementations) {
+      times.push(measure(implementation, benchmark.create));
+    }
+  }
+
+  const v8Time = median(v8Times);
+  const currentTime = median(currentTimes);
+  results.push({
+    benchmark: benchmark.name,
+    v8Time,
+    currentTime,
+    improvement: ((v8Time - currentTime) / v8Time) * 100,
+  });
+}
+
+console.log(
+  `Performance comparison: ${iterations.toLocaleString()} iterations, ` +
+    `${rounds} rounds (median)`
+);
+console.table(
+  Object.fromEntries(
+    results.map(({ benchmark, v8Time, currentTime, improvement }) => [
+      benchmark,
+      {
+        "V8 (ms)": v8Time.toFixed(2),
+        "Current (ms)": currentTime.toFixed(2),
+        Improvement: `${improvement.toFixed(1)}%`,
+      },
+    ])
+  )
+);
+
+const regressions = results.filter(({ improvement }) => improvement <= 0);
+if (regressions.length > 0) {
+  console.error(
+    `Performance regression in: ${regressions
+      .map(({ benchmark }) => benchmark)
+      .join(", ")}`
+  );
+  process.exitCode = 1;
+}

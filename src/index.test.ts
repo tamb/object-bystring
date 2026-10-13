@@ -1,5 +1,6 @@
 import { describe, test, expect, beforeEach } from "vitest";
 import { byString } from "./index";
+import { byStringV8 } from "./v8";
 
 // Import the helper functions for unit testing
 // We'll need to export them temporarily for testing
@@ -468,5 +469,49 @@ describe("byString getters", () => {
     byString(data, "people[1]", "Jeremy");
     const person = byString(data, "people[0]");
     expect(person).toBeUndefined();
+  });
+});
+
+describe("V8 compatibility", () => {
+  const paths = [
+    "",
+    "...",
+    "a.b",
+    "a.list[0].name",
+    "a.list[1]",
+    "a.list[3]",
+    "a[",
+    "a[abc]",
+    "a[01]",
+    "a[-1]",
+    "a.list[0].",
+    ".a",
+    "a..b",
+  ];
+
+  const createObject = () => ({
+    a: {
+      b: "value",
+      list: [{ name: "first" }, "second"],
+    },
+    "": { a: "empty" },
+  });
+
+  test.each(paths)("preserves getter behavior for %j", (path) => {
+    const currentObject = createObject();
+    const v8Object = createObject();
+
+    expect(byString(currentObject, path)).toEqual(byStringV8(v8Object, path));
+    expect(currentObject).toEqual(v8Object);
+  });
+
+  test.each(paths)("preserves setter behavior for %j", (path) => {
+    const currentObject = createObject();
+    const v8Object = createObject();
+
+    expect(byString(currentObject, path, "updated")).toEqual(
+      byStringV8(v8Object, path, "updated")
+    );
+    expect(currentObject).toEqual(v8Object);
   });
 });

@@ -102,7 +102,26 @@ Getting values for fields that don't exist will return `undefined`.
 
 The `byString` function has undergone significant optimizations across multiple versions:
 
-#### **V8 (Current) - Ultra-Optimized**
+#### **V8.0.1 (Current) - Faster Path Scanner**
+
+V8.0.1 improves every benchmarked path shape by **39% to 72%** compared with
+V8.0.0. Results below use 500,000 operations over seven rounds and report the
+median:
+
+| Path shape             | Get faster | Set faster |
+| ---------------------- | ---------- | ---------- |
+| Simple property        | **71.0%**  | **71.9%**  |
+| Nested property        | **47.2%**  | **46.5%**  |
+| Array index            | **48.2%**  | **48.9%**  |
+| Mixed object and array | **48.3%**  | **49.9%**  |
+| Dynamic mixed path     | **48.6%**  | **50.2%**  |
+
+The scanner now compares numeric character codes, handles the final property
+outside the delimiter loop, parses common array indices without temporary
+strings, and relies on native sparse-array growth. Its behavior remains
+compatible with V8.0.0.
+
+#### **V8.0.0 - Ultra-Optimized**
 
 V8 delivers **79.55% performance improvement** over the original version (5,000,000 iterations):
 
