@@ -110,11 +110,11 @@ median:
 
 | Path shape             | Get faster | Set faster |
 | ---------------------- | ---------- | ---------- |
-| Simple property        | **71.0%**  | **71.9%**  |
-| Nested property        | **47.2%**  | **46.5%**  |
-| Array index            | **48.2%**  | **48.9%**  |
-| Mixed object and array | **48.3%**  | **49.9%**  |
-| Dynamic mixed path     | **48.6%**  | **50.2%**  |
+| Simple property        | **69.4%**  | **72.4%**  |
+| Nested property        | **44.4%**  | **45.5%**  |
+| Array index            | **49.2%**  | **46.7%**  |
+| Mixed object and array | **48.6%**  | **47.3%**  |
+| Dynamic mixed path     | **49.3%**  | **52.5%**  |
 
 The scanner now compares numeric character codes, handles the final property
 outside the delimiter loop, parses common array indices without temporary
